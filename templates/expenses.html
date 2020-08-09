@@ -18,9 +18,10 @@
 
 <table>
     <thead>
+        <th>ID</th>
         <th>Tytuł</th>
         <th>Opis</th>
-        <th>koszt</th>
+        <th>Koszt</th>
     </thead>
     {% for expense in expenses %}
     <tr>
@@ -32,7 +33,7 @@
     {% endfor %}
 </table>
 <div>
-    <h2> Dodaj nowe zadanie: </h2>
+    <h2> Dodaj nowy wydatek, jeśli naprawdę musisz :( </h2>
     <form method="POST" action="/expenses/">
         {{ form.hidden_tag() }}
         <table>

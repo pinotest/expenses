@@ -1,4 +1,5 @@
-from flask import Flask, jsonify, abort, make_response, request
+from flask import Flask, jsonify, abort, make_response, request, render_template, redirect, url_for
+from forms import ExpenseForm
 from models import expenses
 
 app = Flask(__name__)
@@ -73,15 +74,12 @@ def update_expense(expense_id):
     return jsonify({'expense': expense})
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
-
 # first version without REST
 
 
 @app.route("/expenses/", methods=["GET", "POST"])
 def expenses_list():
-    form = expenseForm()
+    form = ExpenseForm()
     error = ""
     if request.method == "POST":
         if form.validate_on_submit():
@@ -95,10 +93,14 @@ def expenses_list():
 @app.route("/expenses/<int:expense_id>/", methods=["GET", "POST"])
 def expense_details(expense_id):
     expense = expenses.get(expense_id - 1)
-    form = expenseForm(data=expense)
+    form = ExpenseForm(data=expense)
 
     if request.method == "POST":
         if form.validate_on_submit():
             expenses.update(expense_id - 1, form.data)
         return redirect(url_for("expenses_list"))
     return render_template("expense.html", form=form, expense_id=expense_id)
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
