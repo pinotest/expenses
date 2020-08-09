@@ -1,5 +1,5 @@
 # expenses
-Small web application with REST API that user are possible register expenses e.g. houshold expenses or any other.  
+Small web application with REST API that users are possible register expenses e.g. houshold expenses or any other.  
 
 Requirements: Python 3.x and install with requirements fiel:
 pip install -r requirements.txt
