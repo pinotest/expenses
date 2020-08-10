@@ -62,7 +62,7 @@ def update_expense(expense_id):
     if any([
         'title' in data and not isinstance(data.get('title'), str),
         'description' in data and not isinstance(data.get('description'), str),
-        'koszt' in data and not isinstance(data.get('koszt'), bool)
+        'koszt' in data and not isinstance(data.get('koszt'), int)
     ]):
         abort(400)
     expense = {
@@ -90,12 +90,12 @@ def expenses_list():
     return render_template("expenses.html", form=form, expenses=expenses.all(), error=error)
 
 
-@app.route("/expenses/<int:expense_id>/", methods=["GET", "POST"])
+@app.route("/expenses/<int:expense_id>/", methods=["GET", "PUT"])
 def expense_details(expense_id):
     expense = expenses.get(expense_id - 1)
     form = ExpenseForm(data=expense)
 
-    if request.method == "POST":
+    if request.method == "PUT":
         if form.validate_on_submit():
             expenses.update(expense_id - 1, form.data)
         return redirect(url_for("expenses_list"))

@@ -18,14 +18,12 @@
 
 <table>
     <thead>
-        <th>ID</th>
         <th>Tytuł</th>
         <th>Opis</th>
         <th>Koszt</th>
     </thead>
     {% for expense in expenses %}
     <tr>
-        <td>{{ expense.id }}</td>
         <td><a href="/expenses/{{ loop.index }}">{{ expense.title }}</a></td>
         <td>{{ expense.description }}</td>
         <td>{{ expense.koszt }}</td>
