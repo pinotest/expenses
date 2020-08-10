@@ -37,7 +37,7 @@ def create_expense():
         'id': expenses.all()[-1]['id'] + 1,
         'title': request.json['title'],
         'description': request.json.get('description', ""),
-        'done': False
+        'koszt': 0
     }
     expenses.create(expense)
     return jsonify({'expense': expense}), 201
@@ -62,13 +62,13 @@ def update_expense(expense_id):
     if any([
         'title' in data and not isinstance(data.get('title'), str),
         'description' in data and not isinstance(data.get('description'), str),
-        'done' in data and not isinstance(data.get('done'), bool)
+        'koszt' in data and not isinstance(data.get('koszt'), bool)
     ]):
         abort(400)
     expense = {
         'title': data.get('title', expense['title']),
         'description': data.get('description', expense['description']),
-        'done': data.get('done', expense['done'])
+        'koszt': data.get('koszt', expense['koszt'])
     }
     expenses.update(expense_id, expense)
     return jsonify({'expense': expense})
