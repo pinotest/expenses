@@ -1,6 +1,8 @@
 from flask import Flask, jsonify, abort, make_response, request, render_template, redirect, url_for
 from forms import ExpenseForm
 from models import expenses
+import logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "nininini"
@@ -34,10 +36,10 @@ def create_expense():
     if not request.json or not 'title' in request.json:
         abort(400)
     expense = {
-        'id': expenses.all()[-1]['id'] + 1,
+        'id': 1,
         'title': request.json['title'],
         'description': request.json.get('description', ""),
-        'koszt': 0
+        'koszt': request.json['koszt']
     }
     expenses.create(expense)
     return jsonify({'expense': expense}), 201
@@ -83,7 +85,8 @@ def expenses_list():
     error = ""
     if request.method == "POST":
         if form.validate_on_submit():
-            expenses.create(form.data)
+
+            # expenses.create(form.data)
             expenses.save_all()
         return redirect(url_for("expenses_list"))
 
@@ -92,7 +95,7 @@ def expenses_list():
 
 @app.route("/expenses/<int:expense_id>/", methods=["GET", "PUT"])
 def expense_details(expense_id):
-    expense = expenses.get(expense_id - 1)
+    expense = expenses.get(expense_id)
     form = ExpenseForm(data=expense)
 
     if request.method == "PUT":

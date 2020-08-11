@@ -32,7 +32,6 @@ class Expenses:
         return []
 
     def create(self, data):
-        # brakuje dodawania id stąd późńiej problemy
         new_id = 1
         while (self.get(new_id) != []):
             new_id += 1
