@@ -24,7 +24,7 @@
     </thead>
     {% for expense in expenses %}
     <tr>
-        <td><a href="/expenses/{{ loop.index }}">{{ expense.title }}</a></td>
+        <td><a href="/expenses/{{ expense.id }}">{{ expense.title }}</a></td>
         <td>{{ expense.description }}</td>
         <td>{{ expense.koszt }}</td>
     </tr>
